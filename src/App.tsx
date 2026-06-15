@@ -130,6 +130,16 @@ const slides: Slide[] = [
   },
   {
     eyebrow: "02 Git Basic",
+    title: "Git 사용자 정보 설정",
+    message: "Commit에는 작성자 정보가 함께 기록된다.",
+    content:
+      "처음 Git을 사용하는 컴퓨터에서는 사용자 이름과 이메일을 설정해야 합니다.\n\nCommit에는 누가 변경했는지 남기 때문에 Git은 작성자 정보를 필요로 합니다.\n\n한 번 설정하면 이후 모든 저장소에서 기본값으로 사용됩니다. 회사나 교육 환경에서는 GitHub 계정 이메일과 맞추는 것이 좋습니다.",
+    example:
+      "git config --global user.name \"Tom\"\n\ngit config --global user.email \"tom@example.com\"\n\ngit config --global --list",
+    note: "첫 commit에서 작성자 정보 오류가 나기 전에 미리 설정하게 한다.",
+  },
+  {
+    eyebrow: "02 Git Basic",
     title: "README 만들기",
     message: "첫 파일을 만들고 Git 상태를 확인한다.",
     content:
@@ -238,6 +248,15 @@ const slides: Slide[] = [
   },
   {
     eyebrow: "02 Git Basic",
+    title: "git diff",
+    message: "무엇이 바뀌었는지 확인한다.",
+    content:
+      "git status가 어떤 파일이 바뀌었는지 알려준다면, git diff는 그 파일 안에서 무엇이 바뀌었는지 보여줍니다.\n\nCommit하기 전에는 diff를 확인하는 습관이 중요합니다.\n\n실수로 들어간 코드, 불필요한 로그, 의도하지 않은 변경을 commit 전에 발견할 수 있습니다.",
+    example: "git diff\n\n- old text\n+ new text",
+    note: "status는 목록, diff는 실제 변경 내용이라고 구분해서 설명한다.",
+  },
+  {
+    eyebrow: "02 Git Basic",
     title: "git restore",
     message: "Commit하지 않은 변경을 되돌린다.",
     content:
@@ -325,6 +344,15 @@ const slides: Slide[] = [
       "git branch 명령으로 현재 작업 중인 Branch를 확인할 수 있습니다.\n\n별표(*)가 붙은 Branch가 현재 위치입니다.\n\n작업 전에 내가 어느 Branch에 있는지 확인하는 습관은 매우 중요합니다. 잘못된 Branch에서 작업하면 나중에 정리 비용이 커집니다.",
     example: "git branch\n\n* feature/login\n  main",
     note: "실습 중 명령 실행 전 현재 Branch를 꼭 확인하게 한다.",
+  },
+  {
+    eyebrow: "03 Branch & Merge",
+    title: "Branch 이동",
+    message: "작업 전에는 올바른 Branch로 이동한다.",
+    content:
+      "Branch를 만들었다면 다시 main으로 돌아가거나 다른 Branch로 이동할 수 있어야 합니다.\n\n초보자가 가장 자주 하는 실수는 잘못된 Branch에서 작업을 시작하는 것입니다.\n\n작업 전에는 git branch로 현재 위치를 확인하고, 필요한 경우 git switch로 원하는 Branch로 이동합니다.",
+    example: "git switch main\n\ngit switch feature/login\n\ngit branch",
+    note: "새 기능을 시작하기 전 main에서 출발하는 흐름을 반복해서 보여준다.",
   },
   {
     eyebrow: "03 Branch & Merge",
@@ -487,6 +515,15 @@ const slides: Slide[] = [
       "로컬에서 만든 Git 저장소를 GitHub 저장소와 연결합니다.\n\norigin은 원격 저장소의 별칭입니다.\n\n한 번 연결해두면 이후 push와 pull 명령으로 로컬과 GitHub 사이의 변경을 주고받을 수 있습니다.",
     example: "git remote add origin https://github.com/user/todo-app.git\n\nLocal Repo\n    ↓\n  origin\n    ↓\n GitHub",
     note: "origin은 주소 자체가 아니라 원격 저장소를 부르는 이름이라고 설명한다.",
+  },
+  {
+    eyebrow: "04 GitHub & PR",
+    title: "원격 저장소 확인",
+    message: "연결된 GitHub 주소를 확인한다.",
+    content:
+      "원격 저장소를 연결한 뒤에는 git remote -v로 주소가 제대로 등록되었는지 확인합니다.\n\npush나 pull이 실패할 때 가장 먼저 확인할 것 중 하나가 remote 주소입니다.\n\norigin이 어느 GitHub 저장소를 가리키는지 알면 로컬 작업과 원격 저장소의 연결 관계를 명확히 이해할 수 있습니다.",
+    example: "git remote -v\n\norigin  https://github.com/user/todo-app.git (fetch)\norigin  https://github.com/user/todo-app.git (push)",
+    note: "push 오류가 났을 때 remote 확인이 첫 번째 점검 포인트라고 안내한다.",
   },
   {
     eyebrow: "04 GitHub & PR",
@@ -742,6 +779,15 @@ const slides: Slide[] = [
   },
   {
     eyebrow: "05 Conflict",
+    title: "해결 상태 확인",
+    message: "충돌 해결은 status 확인까지가 한 세트다.",
+    content:
+      "Conflict marker를 정리하고 commit했다고 끝이 아닙니다.\n\n반드시 git status로 충돌 상태가 사라졌는지 확인해야 합니다.\n\n그 다음 git log --oneline --graph로 Merge 결과가 기록에 어떻게 남았는지 확인하면 충돌 해결 흐름을 더 확실히 이해할 수 있습니다.",
+    example: "git status\n\ngit log --oneline --graph\n\n*   Merge branch 'feature/login'\n|\\\n| * feature commit\n* main commit",
+    note: "해결 후 확인 루틴을 습관으로 만들게 한다.",
+  },
+  {
+    eyebrow: "05 Conflict",
     title: "VSCode Conflict 도구",
     message: "IDE가 충돌 해결을 도와준다.",
     content:
@@ -976,6 +1022,15 @@ const slides: Slide[] = [
   },
   {
     eyebrow: "07 AI Era",
+    title: "AI 코드 검증 루틴",
+    message: "AI가 만든 변경도 사람이 검증한 뒤 기록한다.",
+    content:
+      "AI에게 기능을 맡긴 뒤에는 바로 commit하지 않습니다.\n\n먼저 변경 내용을 확인하고, 테스트를 실행하고, 불필요한 코드를 정리한 뒤 의미 있는 단위로 commit합니다.\n\nAI 시대의 Git 습관은 빠른 생성보다 안전한 검증에 초점을 둡니다.",
+    example: "AI Generate\n\ngit diff\n\nnpm test\n\ngit add .\ngit commit",
+    note: "AI 결과물을 받는 순간보다 검증하고 기록하는 순간이 개발자의 책임이라고 강조한다.",
+  },
+  {
+    eyebrow: "07 AI Era",
     title: "AI와 Branch",
     message: "AI 실험은 Branch에서 한다.",
     content:
@@ -1172,6 +1227,10 @@ function App() {
 
             <DeveloperPanel slide={activeSlide} />
           </div>
+        </div>
+
+        <div className="pointer-events-none absolute bottom-3 left-5 z-10 font-mono text-[11px] font-semibold text-slate-400/55 md:bottom-4 md:left-7 lg:left-8">
+          장기영 / AXISJ.com
         </div>
 
         <div className="slide-nav-zone absolute left-0 top-0 z-10 flex h-full w-24 items-center justify-start pl-3 md:w-28 md:pl-4">
