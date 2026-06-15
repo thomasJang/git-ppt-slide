@@ -1,4 +1,5 @@
 import { ArrowLeft, ArrowRight, BookOpen, Clock3, Play } from "lucide-react";
+import type { ReactNode } from "react";
 import { useEffect, useMemo, useState } from "react";
 
 type Slide = {
@@ -386,8 +387,9 @@ const slides: Slide[] = [
     title: "Branch 그래프 이해하기",
     message: "Branch는 Commit 그래프를 확장한다.",
     content:
-      "Git은 파일이 아니라 Commit 그래프를 관리합니다.\n\nBranch는 단순한 포인터입니다.\n\nmain에서 갈라진 feature/login Branch가 B, C, D Commit을 만들면 Git 그래프는 새로운 작업 흐름을 가지게 됩니다.",
-    example: "main\n\nA\n\n   B\n       C\n           D",
+      "Git은 파일이 아니라 Commit 그래프를 관리합니다.\n\nBranch는 단순한 포인터입니다.\n\nmain에서 feature/login Branch가 갈라지고, main도 별도 변경을 만들면 Git 그래프에는 두 개의 작업 흐름이 동시에 보입니다.",
+    example:
+      "git log --oneline --graph --decorate --all\n\n* d4e5f6a (HEAD -> feature/login) add login button\n* c3d4e5f add login input\n| * b2c3d4e (main) update README\n|/\n* a1b2c3d initial todo app\n\nA에서 갈라져\nmain과 feature/login이\n서로 다른 commit을 가리킴",
     note: "Branch를 폴더 복사로 오해하지 않도록 포인터 개념을 가볍게 설명한다.",
   },
   {
@@ -414,7 +416,8 @@ const slides: Slide[] = [
     message: "가장 단순한 Merge 방식",
     content:
       "Fast Forward Merge는 main에 추가 변경이 없고 feature만 앞으로 진행된 경우 발생합니다.\n\n이때 Git은 main 포인터를 feature의 최신 Commit으로 앞으로 이동시키기만 하면 됩니다.\n\n새로운 Merge Commit이 필요하지 않은 가장 단순한 방식입니다.",
-    example: "main 변경 없음\nfeature만 변경됨\n\nA → B → C",
+    example:
+      "Before\n\n* c3d4e5f (feature/login) add login input\n* b2c3d4e add login page\n* a1b2c3d (HEAD -> main) initial todo app\n\nAfter: git merge feature/login\n\n* c3d4e5f (HEAD -> main, feature/login) add login input\n* b2c3d4e add login page\n* a1b2c3d initial todo app",
     note: "포인터가 앞으로 이동하는 그림으로 설명한다.",
   },
   {
@@ -441,7 +444,8 @@ const slides: Slide[] = [
     message: "Commit 기록을 정리하는 기술",
     content:
       "Rebase는 Branch의 시작점을 옮깁니다.\n\n히스토리를 더 깔끔하게 만들 수 있습니다.\n\n하지만 이미 공유된 Commit을 함부로 Rebase하면 협업에 혼란을 줄 수 있습니다. 처음에는 개념만 이해하고 팀 규칙을 따르는 것이 중요합니다.",
-    example: "Before\n\nA → B\n\nA → C\n\nAfter\n\nA → B → C",
+    example:
+      "Before\n\n* c3c3c3c (feature/login) login work\n| * b2b2b2b (main) update README\n|/\n* a1a1a1a initial todo app\n\nAfter: git rebase main\n\n* c9c9c9c (HEAD -> feature/login) login work\n* b2b2b2b (main) update README\n* a1a1a1a initial todo app",
     note: "Rebase는 강력하지만 조심해야 하는 도구라고 소개한다.",
   },
   {
@@ -452,6 +456,16 @@ const slides: Slide[] = [
       "Merge는 안전하고 기록을 보존합니다.\n\nRebase는 깔끔한 이력과 선형 그래프를 만들 수 있습니다.\n\n둘 다 변경을 합치는 방법이지만 목적과 사용 상황이 다릅니다. 팀의 협업 규칙에 따라 선택해야 합니다.",
     example: "Merge\n- 안전\n- 기록 보존\n\nRebase\n- 깔끔한 이력\n- 선형 그래프\n\nMerge ≠ Rebase",
     note: "초보자는 Merge를 먼저 익히고 Rebase는 팀 규칙 안에서 사용하게 한다.",
+  },
+  {
+    eyebrow: "03 Branch & Merge",
+    title: "Cherry-pick",
+    message: "특정 Commit 하나만 골라서 가져온다.",
+    content:
+      "cherry-pick은 다른 Branch에 있는 특정 Commit 하나를 현재 Branch로 가져오는 명령입니다.\n\n전체 Branch를 Merge하지 않고 필요한 변경만 선택할 수 있습니다.\n\n예를 들어 운영 장애를 고친 hotfix Commit을 dev Branch에도 반영해야 할 때 사용할 수 있습니다. 다만 같은 변경을 여러 곳에 복사하는 것이므로 팀 규칙에 맞게 신중히 사용해야 합니다.",
+    example:
+      "Before\n\n* h1h1h1h (main) hotfix login error\n* b2b2b2b release commit\n| * c3c3c3c (HEAD -> dev) dev work\n|/\n* a1a1a1a common base\n\ngit cherry-pick h1h1h1h\n\nAfter\n\n* h9h9h9h (HEAD -> dev) hotfix login error\n* c3c3c3c dev work\n| * h1h1h1h (main) hotfix login error\n| * b2b2b2b release commit\n|/\n* a1a1a1a common base\n\nsame change, new commit",
+    note: "cherry-pick은 Merge가 아니라 Commit 복사에 가깝다고 설명한다.",
   },
   {
     eyebrow: "03 Branch & Merge",
@@ -926,9 +940,9 @@ const slides: Slide[] = [
     title: "Hotfix",
     message: "운영 장애는 빠르게 대응한다.",
     content:
-      "긴급 버그 수정 시 main 기준으로 수정합니다.\n\n수정 후 dev에도 반영합니다.\n\nHotfix는 운영 장애를 빠르게 해결하기 위한 예외적인 흐름입니다. 빠른 대응과 동시에 이후 개발 브랜치와의 동기화도 잊지 않아야 합니다.",
-    example: "main\n\n ↓\n\nHotfix",
-    note: "운영 장애 대응은 속도와 기록을 모두 챙겨야 한다고 설명한다.",
+      "긴급 버그 수정 시 main 기준으로 수정합니다.\n\n수정 후 dev에도 반영합니다. 이때 hotfix Commit 하나만 dev로 가져와야 한다면 cherry-pick을 사용할 수 있습니다.\n\nHotfix는 운영 장애를 빠르게 해결하기 위한 예외적인 흐름입니다. 빠른 대응과 동시에 이후 개발 브랜치와의 동기화도 잊지 않아야 합니다.",
+    example: "git switch main\n# fix bug\n\ngit switch dev\ngit cherry-pick hotfix-commit",
+    note: "운영 장애 대응은 속도와 기록을 모두 챙겨야 하며, cherry-pick은 hotfix 동기화 예시로 설명한다.",
   },
   {
     eyebrow: "06 Real World",
@@ -1107,6 +1121,102 @@ function clampSlide(index: number) {
   return Math.min(Math.max(index, 0), slides.length - 1);
 }
 
+function tokenClassName(token: string) {
+  if (/^<\/?/.test(token)) return "text-fuchsia-300";
+  if (/^git\b/.test(token)) return "text-sky-300";
+  if (/^--/.test(token)) return "text-violet-300";
+  if (/^[0-9a-f]{7,40}$/i.test(token)) return "text-amber-300";
+  if (/^tag:/.test(token)) return "text-yellow-300";
+  if (token === "HEAD") return "text-lime-300";
+  if (token === "main" || token === "dev") return "text-cyan-300";
+  if (token.startsWith("origin/")) return "text-rose-300";
+  if (token.includes("/")) return "text-sky-300";
+  return "text-slate-100";
+}
+
+function renderDecoration(token: string, key: string) {
+  const inner = token.slice(1, -1);
+  const parts = inner.split(/(, | -> )/);
+
+  return (
+    <span key={key} className="text-slate-400">
+      (
+      {parts.map((part, index) => {
+        if (part === ", " || part === " -> ") {
+          return (
+            <span key={`${key}-sep-${index}`} className="text-slate-500">
+              {part}
+            </span>
+          );
+        }
+
+        return (
+          <span key={`${key}-part-${index}`} className={tokenClassName(part)}>
+            {part}
+          </span>
+        );
+      })}
+      )
+    </span>
+  );
+}
+
+function renderTerminalLine(line: string, lineIndex: number) {
+  if (line.length === 0) return <span className="text-slate-500">&nbsp;</span>;
+  if (line.trim().startsWith("#")) return <span className="italic text-slate-500">{line}</span>;
+  if (line.startsWith("+")) return <span className="text-emerald-300">{line}</span>;
+  if (line.startsWith("-")) return <span className="text-rose-300">{line}</span>;
+
+  const nodes: ReactNode[] = [];
+  const pattern =
+    /(<\/?[A-Za-z][^>]*>|\([^)]+\)|\bgit(?: [a-z0-9./_-]+)+\b|--[a-z0-9-]+|\b[0-9a-f]{7,40}\b|\bHEAD\b|origin\/[A-Za-z0-9/_-]+|feature\/[A-Za-z0-9/_-]+|\bmain\b|\bdev\b|\btag: v[0-9.]+)/gi;
+  let cursor = 0;
+
+  for (const match of line.matchAll(pattern)) {
+    const matchIndex = match.index ?? 0;
+    const token = match[0];
+
+    if (matchIndex > cursor) {
+      const plain = line.slice(cursor, matchIndex);
+      nodes.push(
+        <span key={`${lineIndex}-plain-${cursor}`} className={/^[*|\\/ ]+$/.test(plain) ? "text-emerald-400" : "text-slate-100"}>
+          {plain}
+        </span>,
+      );
+    }
+
+    nodes.push(
+      token.startsWith("(") && token.endsWith(")") ? (
+        renderDecoration(token, `${lineIndex}-token-${matchIndex}`)
+      ) : (
+        <span key={`${lineIndex}-token-${matchIndex}`} className={tokenClassName(token)}>
+          {token}
+        </span>
+      ),
+    );
+    cursor = matchIndex + token.length;
+  }
+
+  if (cursor < line.length) {
+    const plain = line.slice(cursor);
+    nodes.push(
+      <span key={`${lineIndex}-plain-end`} className={/^[*|\\/ ]+$/.test(plain) ? "text-emerald-400" : "text-slate-100"}>
+        {plain}
+      </span>,
+    );
+  }
+
+  return nodes.length > 0 ? nodes : line;
+}
+
+function renderTerminalText(text: string) {
+  return text.split("\n").map((line, index) => (
+    <span key={index} className="block min-h-7">
+      {renderTerminalLine(line, index)}
+    </span>
+  ));
+}
+
 function DeveloperPanel({ slide }: { slide: Slide }) {
   return (
     <div className="h-full min-h-0">
@@ -1119,8 +1229,8 @@ function DeveloperPanel({ slide }: { slide: Slide }) {
           </div>
           <span className="font-mono text-[11px] font-bold uppercase text-slate-400">terminal</span>
         </div>
-        <pre className="h-full whitespace-pre-wrap break-words p-4 font-mono text-sm font-semibold leading-7 text-lime-100 md:text-base">
-          <code>{slide.example}</code>
+        <pre className="h-full whitespace-pre-wrap break-words p-4 font-mono text-sm font-semibold leading-7 text-slate-100 md:text-base">
+          <code>{renderTerminalText(slide.example)}</code>
         </pre>
       </div>
     </div>
