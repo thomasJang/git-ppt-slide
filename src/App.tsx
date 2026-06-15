@@ -1015,11 +1015,11 @@ function DeveloperPanel({ slide }: { slide: Slide }) {
           <div className="flex items-center gap-2">
             <span className="h-3 w-3 rounded-full bg-rose-500" />
             <span className="h-3 w-3 rounded-full bg-amber-400" />
-            <span className="h-3 w-3 rounded-full bg-emerald-500" />
+            <span className="h-3 w-3 rounded-full bg-lime-400" />
           </div>
           <span className="font-mono text-[11px] font-bold uppercase text-slate-400">terminal</span>
         </div>
-        <pre className="h-full whitespace-pre-wrap break-words p-4 font-mono text-sm font-semibold leading-7 text-emerald-100 md:text-base">
+        <pre className="h-full whitespace-pre-wrap break-words p-4 font-mono text-sm font-semibold leading-7 text-lime-100 md:text-base">
           <code>{slide.example}</code>
         </pre>
       </div>
@@ -1029,8 +1029,22 @@ function DeveloperPanel({ slide }: { slide: Slide }) {
 
 function App() {
   const [current, setCurrent] = useState(0);
+  const [hoveredSlide, setHoveredSlide] = useState<number | null>(null);
+  const [progressHoverX, setProgressHoverX] = useState(0);
   const activeSlide = slides[current];
   const progress = useMemo(() => ((current + 1) / slides.length) * 100, [current]);
+  const pageTone = slides.length <= 1 ? 0 : current / (slides.length - 1);
+  const progressRed = Math.round(220 * pageTone);
+  const progressDark = Math.round(20 * pageTone);
+  const progressStyle = {
+    backgroundColor: `rgb(${progressRed}, ${progressDark}, ${progressDark})`,
+  };
+
+  const updateProgressHover = (clientX: number, rect: DOMRect) => {
+    const ratio = Math.min(Math.max((clientX - rect.left) / rect.width, 0), 0.999999);
+    setHoveredSlide(clampSlide(Math.floor(ratio * slides.length)));
+    setProgressHoverX(Math.min(Math.max(ratio * 100, 12), 88));
+  };
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -1050,20 +1064,48 @@ function App() {
   return (
     <main className="h-screen overflow-hidden bg-white text-slate-950">
       <section className="relative h-screen w-full overflow-hidden bg-white">
-        <div className="absolute inset-x-0 top-0 h-1 bg-slate-200">
-          <div className="h-full bg-emerald-500 transition-all duration-300" style={{ width: `${progress}%` }} />
+        <div
+          className="absolute inset-x-0 top-0 z-20 h-5 cursor-pointer"
+          onClick={(event) => {
+            const rect = event.currentTarget.getBoundingClientRect();
+            const ratio = Math.min(Math.max((event.clientX - rect.left) / rect.width, 0), 0.999999);
+            setCurrent(clampSlide(Math.floor(ratio * slides.length)));
+          }}
+          onMouseLeave={() => setHoveredSlide(null)}
+          onMouseMove={(event) => updateProgressHover(event.clientX, event.currentTarget.getBoundingClientRect())}
+        >
+          <div className="h-1 bg-slate-200">
+            <div className="h-full transition-all duration-300" style={{ width: `${progress}%`, ...progressStyle }} />
+          </div>
+          {hoveredSlide !== null && (
+            <div
+              className="pointer-events-none absolute top-3 z-30 w-64 -translate-x-1/2 rounded-md border border-slate-200 bg-white px-3 py-2 text-left shadow-sm"
+              style={{ left: `${progressHoverX}%` }}
+            >
+              <div className="mb-1 font-mono text-[11px] font-black text-lime-600">
+                {hoveredSlide + 1} / {slides.length}
+              </div>
+              <div className="truncate text-xs font-black text-slate-950">{slides[hoveredSlide].title}</div>
+              <div className="mt-1 truncate text-[11px] font-bold text-slate-500">{slides[hoveredSlide].eyebrow}</div>
+            </div>
+          )}
         </div>
 
         <div className="grid h-full p-5 pb-6 md:p-7 md:pb-8 lg:p-8">
           <div className="grid min-h-0 grid-cols-2 gap-5">
             <div className="flex min-w-0 flex-col gap-3">
               <div>
-                <div className="mb-3 inline-flex items-center gap-2 rounded-md bg-slate-100 px-3 py-2 text-xs font-bold uppercase tracking-normal text-slate-600">
-                  <Play size={14} />
-                  {activeSlide.eyebrow}
+                <div className="mb-3 flex items-center gap-2">
+                  <div className="inline-flex items-center gap-2 rounded-md bg-slate-100 px-3 py-2 text-xs font-bold uppercase tracking-normal text-slate-600">
+                    <Play size={14} />
+                    {activeSlide.eyebrow}
+                  </div>
+                  <div className="rounded-md border border-slate-200 bg-white px-2 py-1 font-mono text-[10px] font-black text-slate-500">
+                    {current + 1} / {slides.length}
+                  </div>
                 </div>
                 <h2 className="max-w-3xl text-3xl font-black leading-tight text-slate-950">{activeSlide.title}</h2>
-                <p className="mt-3 max-w-2xl text-sm font-bold leading-6 text-emerald-700 md:text-base">{activeSlide.message}</p>
+                <p className="mt-3 max-w-2xl text-sm font-bold leading-6 text-lime-700 md:text-base">{activeSlide.message}</p>
               </div>
 
               <div className="rounded-md border border-slate-200 bg-slate-50 p-4">
@@ -1084,12 +1126,6 @@ function App() {
             </div>
 
             <DeveloperPanel slide={activeSlide} />
-          </div>
-        </div>
-
-        <div className="absolute right-5 top-4 z-10 flex items-center gap-3">
-          <div className="rounded-full border border-slate-200 bg-white/90 px-3 py-1 text-xs font-black text-slate-600 shadow-sm backdrop-blur">
-            {current + 1} / {slides.length}
           </div>
         </div>
 
