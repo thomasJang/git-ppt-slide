@@ -71,9 +71,9 @@ const slides: Slide[] = [
     title: "Git이 해결한 문제",
     message: "Git은 개발자의 실수를 두려워하지 않게 만든다.",
     content:
-      "실수로 파일을 삭제해도 복구할 수 있습니다.\n\n새로운 기능을 실험하다 실패해도 되돌릴 수 있습니다.\n\nGit은 실패 비용을 낮춰주는 도구입니다. 개발자는 안전망이 있을 때 더 적극적으로 실험하고 개선할 수 있습니다.",
+      "실수로 파일을 삭제해도 git restore로 마지막 commit 상태로 되돌릴 수 있습니다.\n\n새로운 기능을 실험하다 실패하면 git reset으로 commit 위치를 이전 시점으로 돌리거나, git checkout으로 특정 branch나 commit의 상태를 확인할 수 있습니다.\n\nGit은 실패 비용을 낮춰주는 도구입니다. 개발자는 안전망이 있을 때 더 적극적으로 실험하고 개선할 수 있습니다.",
     example: "git restore .\n\ngit reset\n\ngit checkout",
-    note: "Git은 실수를 없애는 도구가 아니라 실수해도 회복하게 하는 도구라고 강조한다.",
+    note: "restore는 파일 복구, reset은 commit 흐름 되돌리기, checkout은 다른 branch나 과거 commit으로 이동해 확인하는 명령이라고 설명한다.",
   },
   {
     eyebrow: "01 Intro",
@@ -107,9 +107,9 @@ const slides: Slide[] = [
     title: "첫 Git 프로젝트 만들기",
     message: "Git은 직접 사용해 봐야 이해된다.",
     content:
-      "오늘은 Todo App 프로젝트를 만들면서 Git을 배워보겠습니다.\n\n실제 현업 개발자가 사용하는 방식 그대로 진행합니다.\n\n폴더를 만들고, Git 저장소로 초기화하고, 파일을 수정하고, add와 commit을 반복하며 Git의 흐름을 몸으로 익히는 것이 목표입니다.",
-    example: "mkdir todo-app\ncd todo-app\ngit init",
-    note: "개념 설명보다 손으로 직접 입력하며 흐름을 익히는 파트라고 안내한다.",
+      "오늘은 Todo App 프로젝트를 만들면서 Git을 배워보겠습니다.\n\nWindows 사용자는 시작 메뉴에서 Git Bash를 실행하는 것을 권장합니다. PowerShell이나 Windows Terminal에서도 Git이 설치되어 있으면 같은 명령을 사용할 수 있습니다.\n\n폴더를 만들고, Git 저장소로 초기화하고, 파일을 수정하고, add와 commit을 반복하며 Git의 흐름을 몸으로 익히는 것이 목표입니다.",
+    example: "Windows\nGit Bash 실행\n\ngit --version\nmkdir todo-app\ncd todo-app\ngit init",
+    note: "Windows 사용자는 Git Bash를 기본 터미널로 안내하고, PowerShell에서도 git --version이 동작하면 같은 명령을 쓸 수 있다고 설명한다.",
   },
   {
     eyebrow: "02 Git Basic",
@@ -325,7 +325,7 @@ const slides: Slide[] = [
     message: "Branch는 독립된 작업 공간이다.",
     content:
       "Branch는 현재 상태를 기반으로 새로운 작업 공간을 생성합니다.\n\n다른 Branch에 영향을 주지 않고 자유롭게 개발할 수 있습니다.\n\n기능 개발, 버그 수정, 실험을 서로 분리하면 main을 안정적으로 유지할 수 있습니다.",
-    example: "main\n\nA\n\n   feature/login",
+    example: "main\n  ↓\ncommit A\n\nA에서 새 작업 공간 생성\n  ↓\nfeature/login\n\nmain → 안정 버전\nfeature/login → 로그인 작업",
     note: "Branch는 복사본이 아니라 Commit을 가리키는 포인터라고 맛보기로 언급한다.",
   },
   {
@@ -334,7 +334,8 @@ const slides: Slide[] = [
     message: "새로운 기능 개발은 Branch 생성으로 시작한다.",
     content:
       "새로운 로그인 기능을 만들기 위해 feature/login Branch를 생성합니다.\n\n예전 방식으로는 git checkout -b를 많이 사용했고, 최근에는 git switch -c도 사용할 수 있습니다.\n\n명령 실행 후 현재 작업 위치가 새 Branch로 이동합니다.",
-    example: "git checkout -b feature/login\n\n# 또는\n\ngit switch -c feature/login\n\nSwitched to a new branch\n'feature/login'",
+    example:
+      "git checkout -b feature/login\n\n# 또는\n\ngit switch -c feature/login\n\n-b / -c\n브랜치 생성 → 해당 브랜치로 이동\n\nmain → feature/login\n\nSwitched to a new branch\n'feature/login'",
     note: "checkout과 switch 둘 다 보여주되 실습에서는 하나를 정해 사용한다.",
   },
   {
@@ -1217,19 +1218,77 @@ function renderTerminalText(text: string) {
   ));
 }
 
+function renderLectureContent(text: string) {
+  const normalizedText = text.replace(/\s*\n+\s*/g, " ");
+  const lines: string[] = [];
+  let lineStart = 0;
+  let periodCount = 0;
+
+  for (let index = 0; index < normalizedText.length - 1; index += 1) {
+    if (normalizedText.slice(index, index + 2) !== ". ") continue;
+
+    periodCount += 1;
+
+    if (periodCount === 2) {
+      lines.push(normalizedText.slice(lineStart, index + 1).trim());
+      lineStart = index + 2;
+      periodCount = 0;
+    }
+  }
+
+  const remainingText = normalizedText.slice(lineStart).trim();
+  if (remainingText.length > 0) {
+    lines.push(remainingText);
+  }
+
+  return lines.map((line, index) => (
+    <span key={index} className="block">
+      {renderLectureLine(line, index)}
+    </span>
+  ));
+}
+
+function renderLectureLine(line: string, lineIndex: number) {
+  const nodes: ReactNode[] = [];
+  const fileNamePattern = /[A-Za-z0-9_-]+(?:\.[A-Za-z0-9_-]+)+/g;
+  let cursor = 0;
+
+  for (const match of line.matchAll(fileNamePattern)) {
+    const matchIndex = match.index ?? 0;
+    const fileName = match[0];
+
+    if (matchIndex > cursor) {
+      nodes.push(line.slice(cursor, matchIndex));
+    }
+
+    nodes.push(
+      <span key={`${lineIndex}-filename-${matchIndex}`} className="whitespace-nowrap">
+        {fileName}
+      </span>,
+    );
+    cursor = matchIndex + fileName.length;
+  }
+
+  if (cursor < line.length) {
+    nodes.push(line.slice(cursor));
+  }
+
+  return nodes.length > 0 ? nodes : line;
+}
+
 function DeveloperPanel({ slide }: { slide: Slide }) {
   return (
     <div className="h-full min-h-0">
-      <div className="h-full min-h-0 overflow-hidden rounded-md border border-slate-800 bg-slate-950 text-slate-100">
-        <div className="flex items-center justify-between border-b border-slate-800 px-4 py-3">
+      <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-md border border-slate-800 bg-slate-950 text-slate-100">
+        <div className="flex items-center justify-between border-b border-slate-800 px-[clamp(1rem,1.2vw,1.7rem)] py-[clamp(0.75rem,0.85vw,1.2rem)]">
           <div className="flex items-center gap-2">
             <span className="h-3 w-3 rounded-full bg-rose-500" />
             <span className="h-3 w-3 rounded-full bg-amber-400" />
             <span className="h-3 w-3 rounded-full bg-lime-400" />
           </div>
-          <span className="font-mono text-[11px] font-bold uppercase text-slate-400">terminal</span>
+          <span className="font-mono text-[clamp(0.7rem,0.55vw,0.9rem)] font-bold uppercase text-slate-400">terminal</span>
         </div>
-        <pre className="h-full whitespace-pre-wrap break-words p-4 font-mono text-sm font-semibold leading-7 text-slate-100 md:text-base">
+        <pre className="min-h-0 flex-1 overflow-hidden whitespace-pre-wrap break-words p-[clamp(1rem,1.25vw,1.85rem)] font-mono text-[clamp(0.95rem,0.72vw+0.5rem,1.35rem)] font-semibold leading-[1.75] text-slate-100">
           <code>{renderTerminalText(slide.example)}</code>
         </pre>
       </div>
@@ -1301,37 +1360,41 @@ function App() {
           )}
         </div>
 
-        <div className="grid h-full p-5 pb-6 md:p-7 md:pb-8 lg:p-8">
-          <div className="grid min-h-0 grid-cols-2 gap-5">
-            <div className="flex min-w-0 flex-col gap-3">
+        <div className="grid h-full p-[clamp(1.25rem,2vw,3rem)] pb-[clamp(1.5rem,2.2vw,3.25rem)]">
+          <div className="grid min-h-0 grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)] gap-[clamp(1.25rem,1.7vw,2.75rem)]">
+            <div className="flex min-w-0 flex-col gap-[clamp(0.85rem,1vw,1.45rem)]">
               <div>
-                <div className="mb-3 flex items-center gap-2">
-                  <div className="inline-flex items-center gap-2 rounded-md bg-slate-100 px-3 py-2 text-xs font-bold uppercase tracking-normal text-slate-600">
+                <div className="mb-[clamp(0.75rem,0.85vw,1.35rem)] flex items-center gap-2">
+                  <div className="inline-flex items-center gap-2 rounded-md bg-slate-100 px-[clamp(0.75rem,0.8vw,1.2rem)] py-[clamp(0.5rem,0.55vw,0.85rem)] text-[clamp(0.75rem,0.48vw,0.95rem)] font-bold uppercase tracking-normal text-slate-600">
                     <Play size={14} />
                     {activeSlide.eyebrow}
                   </div>
-                  <div className="rounded-md border border-slate-200 bg-white px-2 py-1 font-mono text-[10px] font-black text-slate-500">
+                  <div className="rounded-md border border-slate-200 bg-white px-[clamp(0.5rem,0.55vw,0.85rem)] py-[clamp(0.25rem,0.35vw,0.55rem)] font-mono text-[clamp(0.65rem,0.42vw,0.85rem)] font-black text-slate-500">
                     {current + 1} / {slides.length}
                   </div>
                 </div>
-                <h2 className="max-w-3xl text-3xl font-black leading-tight text-slate-950">{activeSlide.title}</h2>
-                <p className="mt-3 max-w-2xl text-sm font-bold leading-6 text-lime-700 md:text-base">{activeSlide.message}</p>
+                <h2 className="max-w-[24ch] text-[clamp(2.25rem,3.1vw,5rem)] font-black leading-[1.02] text-slate-950">{activeSlide.title}</h2>
+                <p className="mt-[clamp(0.75rem,0.9vw,1.35rem)] max-w-[46ch] text-[clamp(1rem,0.78vw+0.5rem,1.45rem)] font-bold leading-[1.55] text-lime-700">
+                  {activeSlide.message}
+                </p>
               </div>
 
-              <div className="rounded-md border border-slate-200 bg-slate-50 p-4">
-                <div className="mb-2 flex items-center gap-2 text-xs font-black uppercase tracking-normal text-slate-500">
+              <div className="rounded-md border border-slate-200 bg-slate-50 p-[clamp(1rem,1.25vw,1.9rem)]">
+                <div className="mb-[clamp(0.5rem,0.6vw,0.95rem)] flex items-center gap-2 text-[clamp(0.75rem,0.48vw,0.95rem)] font-black uppercase tracking-normal text-slate-500">
                   <BookOpen size={15} />
                   강의 내용
                 </div>
-                <p className="text-sm font-medium leading-7 text-slate-700 md:text-base">{activeSlide.content}</p>
+                <p className="text-[clamp(1.1rem,1vw+0.55rem,2rem)] font-medium leading-[1.62] text-slate-700 [word-break:keep-all]">
+                  {renderLectureContent(activeSlide.content)}
+                </p>
               </div>
 
-              <div className="rounded-md border border-slate-200 bg-white p-4">
-                <div className="mb-2 flex items-center gap-2 text-xs font-black uppercase tracking-normal text-slate-500">
+              <div className="rounded-md border border-slate-200 bg-white p-[clamp(1rem,1.05vw,1.6rem)]">
+                <div className="mb-[clamp(0.5rem,0.55vw,0.85rem)] flex items-center gap-2 text-[clamp(0.7rem,0.45vw,0.9rem)] font-black uppercase tracking-normal text-slate-500">
                   <Clock3 size={15} />
                   발표자 노트
                 </div>
-                <p className="text-[13px] font-semibold leading-6 text-slate-700 md:text-sm">{activeSlide.note}</p>
+                <p className="text-[clamp(0.9rem,0.64vw+0.45rem,1.2rem)] font-semibold leading-[1.6] text-slate-700">{activeSlide.note}</p>
               </div>
             </div>
 
