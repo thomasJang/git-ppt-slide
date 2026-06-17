@@ -13,6 +13,60 @@ type Slide = {
 
 const slides: Slide[] = [
   {
+    eyebrow: "00 Open Source",
+    title: "오픈소스란 무엇인가?",
+    message: "소스코드를 공개하고 함께 발전시키는 개발 방식이다.",
+    content:
+      "오픈소스는 소프트웨어의 소스코드를 공개해 누구나 읽고, 사용하고, 수정하고, 개선에 참여할 수 있게 하는 방식입니다.\n\n단순히 무료 프로그램이라는 뜻이 아닙니다. 중요한 것은 코드가 열려 있고, 사람들이 그 코드를 기반으로 배우고 협력하고 발전시킬 수 있다는 점입니다.\n\n오늘 배우는 Git도 오픈소스 프로젝트이며, 수많은 개발 도구와 서비스가 오픈소스 위에서 만들어지고 있습니다.",
+    example: "Open\n\nRead\n\nUse\n\nModify\n\nShare",
+    note: "오픈소스는 무료 여부보다 코드 공개와 협업 문화가 핵심이라고 먼저 구분한다.",
+  },
+  {
+    eyebrow: "00 Open Source",
+    title: "오픈소스가 바꾼 개발 문화",
+    message: "개발은 혼자 만드는 일에서 함께 개선하는 일로 바뀌었다.",
+    content:
+      "오픈소스 이전에도 소프트웨어는 존재했지만, 많은 코드는 회사나 개인 안에 닫혀 있었습니다.\n\n오픈소스는 전 세계 개발자가 같은 코드를 보고, 문제를 제안하고, 수정안을 보내고, 서로 리뷰하는 문화를 만들었습니다.\n\n이 과정에서 버그 수정 속도는 빨라지고, 지식은 공유되고, 좋은 도구는 더 많은 사람에게 퍼질 수 있게 되었습니다.",
+    example: "Issue\n\n ↓\n\nPull Request\n\n ↓\n\nReview\n\n ↓\n\nRelease",
+    note: "오픈소스 문화가 이후 GitHub의 Issue, PR, Review 흐름과 연결된다는 점을 예고한다.",
+  },
+  {
+    eyebrow: "00 Open Source",
+    title: "오픈소스의 역할",
+    message: "현대 소프트웨어 생태계의 기반이 되었다.",
+    content:
+      "운영체제, 프로그래밍 언어, 프레임워크, 데이터베이스, 개발 도구 대부분은 오픈소스와 깊게 연결되어 있습니다.\n\nReact, Vue, Linux, Node.js, TypeScript, VSCode 같은 도구들은 개발자가 매일 사용하는 대표적인 오픈소스 생태계의 일부입니다.\n\n오픈소스 덕분에 학생도 실무와 같은 도구를 사용하고, 실제 프로젝트의 코드를 읽고, 기여하는 경험을 할 수 있습니다.",
+    example: "Linux\n\nNode.js\n\nReact\n\nTypeScript\n\nVSCode",
+    note: "학생들이 이미 사용하는 기술 대부분이 오픈소스와 연결되어 있음을 체감하게 한다.",
+  },
+  {
+    eyebrow: "00 Open Source",
+    title: "왜 Git이 필요했을까?",
+    message: "오픈소스 협업에는 변경 이력 관리가 필요했다.",
+    content:
+      "오픈소스 프로젝트에는 전 세계의 개발자가 동시에 참여합니다.\n\n누가 어떤 코드를 고쳤는지, 왜 바꿨는지, 어떤 변경을 받아들일지 기록하고 검토해야 합니다.\n\n그래서 버전 관리와 협업 도구가 중요해졌습니다. Git은 이런 대규모 협업의 문제를 해결하기 위해 등장했고, 이후 오픈소스와 실무 개발의 핵심 도구가 되었습니다.",
+    example: "Many Developers\n\n ↓\n\nMany Changes\n\n ↓\n\nNeed Git",
+    note: "오픈소스에서 자연스럽게 Git의 필요성으로 넘어가는 연결 슬라이드로 사용한다.",
+  },
+  {
+    eyebrow: "00 Open Source",
+    title: "오픈소스와 AI",
+    message: "AI 개발 도구도 오픈소스 생태계와 깊게 연결되어 있다.",
+    content:
+      "AI 개발 도구는 수많은 공개 코드와 개발 지식이 쌓인 생태계 위에서 발전했습니다.\n\n오픈소스 프로젝트에는 실제 문제를 해결한 코드, 버그 수정 기록, 문서, 토론, 리뷰 문화가 함께 남아 있습니다.\n\nAI는 이런 개발 지식의 흐름을 활용해 코드 제안, 설명, 테스트 작성, 리팩토링 같은 작업을 도와줍니다.",
+    example: "Open Source\n\nCode\nDocs\nIssues\nReviews\n\n ↓\n\nAI Assistant",
+    note: "AI가 갑자기 생긴 마법이 아니라 공개된 개발 지식과 생태계 위에서 성장했다는 관점을 전달한다.",
+  },
+  {
+    eyebrow: "00 Open Source",
+    title: "AI 시대의 책임",
+    message: "오픈소스와 AI를 사용할수록 검증과 기록이 중요하다.",
+    content:
+      "AI가 제안한 코드가 오픈소스 라이브러리를 사용할 수도 있고, 기존 패턴을 흉내 낼 수도 있습니다.\n\n그래서 개발자는 라이선스, 보안, 품질, 프로젝트 맥락을 확인해야 합니다.\n\nAI가 빠르게 코드를 만들수록 어떤 코드를 받아들였는지 Git으로 기록하고, 왜 그렇게 결정했는지 리뷰 과정에서 설명하는 능력이 더 중요해집니다.",
+    example: "AI Suggestion\n\n ↓\n\nCheck License\nCheck Security\nRun Tests\n\n ↓\n\nCommit",
+    note: "오픈소스 사용 책임과 AI 코드 검증 책임을 연결하고, 자연스럽게 Git의 필요성으로 넘어간다.",
+  },
+  {
     eyebrow: "01 Intro",
     title: "Git 활용 특강",
     message: "Git은 개발자의 필수 도구이며 AI 시대에도 더욱 중요해지고 있다.",
@@ -1115,6 +1169,188 @@ const slides: Slide[] = [
       "오늘은 Git 기본기, Branch, Merge, GitHub, Conflict, 실무 전략, AI 시대 Git을 배웠습니다.\n\nGit은 개발자의 가장 중요한 습관 중 하나입니다.\n\nAI가 코드를 더 많이 만들수록 Git은 변경을 이해하고 성장의 기록을 남기는 도구가 됩니다.",
     example: "Code\n\n ↓\n\nGit\n\n ↓\n\nHistory\n\n ↓\n\nGrowth",
     note: "전체 강의의 마지막 메시지로 Git은 개발자의 성장 기록이라고 마무리한다.",
+  },
+  {
+    eyebrow: "Bonus",
+    title: "보너스 챕터",
+    message: "이제 개발 환경을 직접 준비한다.",
+    content:
+      "Git을 배웠다면 다음 단계는 실제 코드를 작성할 개발 환경을 준비하는 것입니다.\n\n이번 보너스 챕터에서는 VSCode 설치와 GitHub Copilot 학생 계정 사용 흐름을 정리합니다.\n\n도구 설치가 끝나면 Git 실습, GitHub 저장소 관리, AI 코드 자동완성을 같은 환경에서 이어갈 수 있습니다.",
+    example: "VSCode\n\n+\n\nGitHub Account\n\n+\n\nCopilot",
+    note: "본 강의 이후 학생들이 바로 개인 노트북에서 실습을 이어갈 수 있도록 안내하는 전환 슬라이드로 사용한다.",
+  },
+  {
+    eyebrow: "Bonus",
+    title: "VSCode 설치",
+    message: "가장 널리 쓰이는 개발 편집기를 설치한다.",
+    content:
+      "VSCode는 Microsoft가 제공하는 무료 코드 편집기입니다.\n\n공식 다운로드 페이지에서 Windows, macOS, Linux용 설치 파일을 받을 수 있습니다.\n\n설치 후에는 터미널, Git 연동, 확장 프로그램, 디버깅 기능을 한 화면에서 사용할 수 있습니다. 처음 개발을 시작하는 학생에게도 가장 접근하기 쉬운 개발 환경입니다.",
+    example: "code.visualstudio.com\n\nDownload\n\nInstall\n\nOpen Folder",
+    note: "반드시 공식 사이트에서 설치하게 하고, 운영체제에 맞는 설치 파일을 선택하도록 안내한다.",
+  },
+  {
+    eyebrow: "Bonus",
+    title: "VSCode 기본 세팅",
+    message: "Git 실습에 필요한 최소 환경을 확인한다.",
+    content:
+      "VSCode를 실행한 뒤 프로젝트 폴더를 열고 터미널을 확인합니다.\n\n터미널에서 git --version을 실행해 Git이 정상 설치되었는지 확인합니다.\n\nGitHub 계정으로 로그인하면 저장소 연동과 확장 기능 사용이 편해집니다. 필요하면 GitHub Pull Requests, GitHub Copilot 같은 확장을 설치합니다.",
+    example: "Open Folder\n\nTerminal\n\ngit --version\n\nExtensions",
+    note: "설치 자체보다 폴더 열기, 터미널 열기, Git 확인까지 이어지는 첫 사용 흐름을 보여준다.",
+  },
+  {
+    eyebrow: "Bonus",
+    title: "React 프로젝트 만들기",
+    message: "Vite로 빠르게 React TypeScript 프로젝트를 시작한다.",
+    content:
+      "Vite는 최신 프론트엔드 프로젝트를 빠르게 생성하고 실행할 수 있게 해주는 개발 도구입니다.\n\nReact와 TypeScript 템플릿을 선택하면 바로 실습 가능한 기본 프로젝트가 만들어집니다.\n\n프로젝트 생성 후 폴더로 이동하고 npm install을 실행하면 필요한 패키지가 설치됩니다.",
+    example: "npm create vite@latest todo-app -- --template react-ts\n\ncd todo-app\n\nnpm install",
+    note: "프로젝트 이름은 강의 실습과 맞춰 todo-app으로 안내하고, 명령은 터미널에서 한 줄씩 실행하게 한다.",
+  },
+  {
+    eyebrow: "Bonus",
+    title: "Tailwind 설치",
+    message: "React 프로젝트에 Tailwind CSS를 추가한다.",
+    content:
+      "Tailwind CSS는 미리 정의된 유틸리티 클래스로 화면을 빠르게 구성하는 CSS 프레임워크입니다.\n\nVite React 프로젝트에서는 tailwindcss, postcss, autoprefixer를 개발 의존성으로 설치합니다.\n\n설치 후 init 명령을 실행하면 tailwind.config.js와 postcss.config.js 설정 파일이 생성됩니다.",
+    example: "npm install -D tailwindcss postcss autoprefixer\n\nnpx tailwindcss init -p",
+    note: "설치 명령과 init 명령을 분리해서 보여주고, 설정 파일이 생성되는지 파일 목록에서 확인하게 한다.",
+  },
+  {
+    eyebrow: "Bonus",
+    title: "Tailwind 설정",
+    message: "어떤 파일에서 Tailwind를 사용할지 지정한다.",
+    content:
+      "Tailwind는 실제로 사용된 클래스만 찾아 CSS를 생성합니다.\n\n그래서 tailwind.config.js의 content 항목에 HTML과 React 소스 파일 경로를 등록해야 합니다.\n\n그 다음 src/index.css에 Tailwind 지시문을 추가하면 React 컴포넌트에서 Tailwind 클래스를 사용할 준비가 끝납니다.",
+    example: "content: [\n  \"./index.html\",\n  \"./src/**/*.{ts,tsx}\"\n]\n\n@tailwind base;\n@tailwind components;\n@tailwind utilities;",
+    note: "content 경로가 빠지면 스타일이 적용되지 않는다는 점을 가장 흔한 실수로 짚어준다.",
+  },
+  {
+    eyebrow: "Bonus",
+    title: "개발 서버 실행",
+    message: "브라우저에서 결과를 확인한다.",
+    content:
+      "설정이 끝나면 npm run dev로 개발 서버를 실행합니다.\n\n터미널에 표시되는 Local 주소를 브라우저에서 열면 React 앱을 확인할 수 있습니다.\n\n코드를 수정하면 Vite가 자동으로 화면을 갱신합니다. 이 흐름을 Git commit과 함께 반복하면 개인 프로젝트의 기본 개발 루틴이 됩니다.",
+    example: "npm run dev\n\nLocal: http://localhost:5173\n\nEdit App.tsx\n\ngit add .\ngit commit",
+    note: "서버 실행, 브라우저 확인, 코드 수정, commit까지 하나의 루틴으로 연결한다.",
+  },
+  {
+    eyebrow: "Bonus",
+    title: "Copilot 학생 계정",
+    message: "학생 인증 후 Copilot 혜택을 확인한다.",
+    content:
+      "GitHub Copilot은 VSCode에서 코드 자동완성, 설명, 수정 제안을 제공하는 AI 개발 도구입니다.\n\n학생은 GitHub Education에서 학생 인증을 진행한 뒤 Copilot 사용 가능 여부를 확인할 수 있습니다.\n\n학교 이메일이나 재학 증명 정보가 필요할 수 있으며, 인증 상태와 제공 혜택은 GitHub 정책에 따라 달라질 수 있습니다.",
+    example: "GitHub Education\n\nStudent Verification\n\nCopilot Access\n\nVSCode Login",
+    note: "학생 무료 혜택은 정책이 바뀔 수 있으므로 현장에서 GitHub Education 페이지 기준으로 확인하게 한다.",
+  },
+  {
+    eyebrow: "Bonus",
+    title: "VSCode에서 Copilot 사용",
+    message: "로그인하고 제안을 검토하며 사용한다.",
+    content:
+      "VSCode에서 GitHub Copilot 확장을 설치하고 GitHub 계정으로 로그인합니다.\n\n코드를 작성하거나 주석으로 원하는 기능을 설명하면 Copilot이 제안을 보여줍니다.\n\n제안은 Tab으로 수락할 수 있지만 그대로 믿으면 안 됩니다. 실행, 테스트, git diff 확인 후 commit하는 습관을 함께 가져가야 합니다.",
+    example: "Install Extension\n\nSign in GitHub\n\nWrite Comment\n\nTab\n\ngit diff",
+    note: "Copilot 사용법을 Git 검증 루틴과 연결해, AI 도구를 안전하게 쓰는 습관으로 마무리한다.",
+  },
+  {
+    eyebrow: "Bonus",
+    title: "팀 소개 페이지 만들기",
+    message: "작은 화면 하나를 AI와 함께 구현한다.",
+    content:
+      "이제 Copilot을 사용해 팀 소개 페이지를 만들어 봅니다.\n\n목표는 팀 이름, 소개 문구, 멤버 카드, 역할, 연락 링크가 있는 간단한 React 페이지입니다.\n\n처음부터 코드를 바로 생성하기보다 어떤 화면을 만들지 먼저 정리해야 Copilot이 더 정확한 결과를 제안합니다.",
+    example: "Team Page\n\nTeam Name\nMembers\nRoles\nLinks",
+    note: "AI 실습의 목표를 명확히 잡고, 페이지에 들어갈 요소를 먼저 말로 정의하게 한다.",
+  },
+  {
+    eyebrow: "Bonus",
+    title: "Copilot에게 계획 설명하기",
+    message: "좋은 지시는 좋은 결과를 만든다.",
+    content:
+      "Copilot에게는 단순히 페이지 만들어줘라고 말하는 것보다 작업 계획을 구체적으로 설명하는 것이 좋습니다.\n\n사용 기술, 화면 구성, 데이터 구조, 스타일 방향, 파일 수정 범위를 함께 알려줍니다.\n\n계획이 명확하면 Copilot의 제안도 작고 검토하기 쉬운 단위로 나옵니다.",
+    example:
+      "React + TypeScript + Tailwind로\n팀 소개 페이지를 만들거야.\n\n멤버 배열을 만들고\n카드 그리드로 보여줘.\n\nApp.tsx만 수정해줘.",
+    note: "프롬프트에는 기술 스택, 원하는 UI, 데이터 형태, 수정 범위를 포함하라고 강조한다.",
+  },
+  {
+    eyebrow: "Bonus",
+    title: "Copilot 실행하기",
+    message: "제안을 받아도 검토는 사람이 한다.",
+    content:
+      "Copilot Chat에 계획을 입력하고 제안된 변경을 확인합니다.\n\n한 번에 너무 많은 파일을 바꾸게 하지 말고 App.tsx부터 작게 수정합니다.\n\n결과가 보이면 브라우저에서 화면을 확인하고, 레이아웃이 어색한 부분은 다시 짧은 지시로 수정 요청합니다.",
+    example:
+      "Prompt\n\n ↓\n\nApply Change\n\n ↓\n\nBrowser Check\n\n ↓\n\nRefine",
+    note: "AI 작업은 한 번에 완성하는 것이 아니라 제안, 확인, 수정의 반복이라는 점을 보여준다.",
+  },
+  {
+    eyebrow: "Bonus",
+    title: "AI 작업도 Git으로 마무리",
+    message: "실행 결과를 확인하고 기록한다.",
+    content:
+      "팀 소개 페이지가 완성되면 바로 commit하지 말고 변경 내용을 먼저 확인합니다.\n\nnpm run build로 오류가 없는지 확인하고 git diff로 Copilot이 바꾼 코드를 읽습니다.\n\n문제가 없으면 의미 있는 commit 메시지로 기록합니다. AI가 만든 코드도 개발자의 책임 아래 Git 이력에 남겨야 합니다.",
+    example: "npm run build\n\ngit diff\n\ngit add .\n\ngit commit -m \"feat: add team page\"",
+    note: "이전 강의의 핵심 메시지인 AI 코드 검증과 Git 기록으로 보너스 실습을 닫는다.",
+  },
+  {
+    eyebrow: "Bonus",
+    title: "팀원들이 함께 작업하기",
+    message: "한 페이지도 역할을 나누면 협업 실습이 된다.",
+    content:
+      "팀 소개 페이지를 팀원들이 함께 개선합니다.\n\n한 명은 팀 소개 문구를 다듬고, 한 명은 멤버 데이터를 추가하고, 한 명은 카드 디자인을 개선하고, 한 명은 반응형 레이아웃을 확인할 수 있습니다.\n\n작업을 작게 나누면 충돌을 줄이고 각자의 변경을 리뷰하기 쉬워집니다.",
+    example: "Member A: Text\n\nMember B: Data\n\nMember C: Design\n\nMember D: Responsive",
+    note: "같은 파일을 동시에 크게 수정하면 conflict가 날 수 있으므로, 가능한 작업 범위를 작게 나누게 한다.",
+  },
+  {
+    eyebrow: "Bonus",
+    title: "각자 Branch에서 작업",
+    message: "팀원의 실험은 main이 아니라 branch에서 한다.",
+    content:
+      "팀원은 각자 맡은 작업 이름으로 branch를 만듭니다.\n\n예를 들어 소개 문구 수정은 feature/team-copy, 멤버 카드 추가는 feature/member-cards처럼 이름을 붙일 수 있습니다.\n\n작업 후 build와 diff를 확인하고 commit한 뒤 GitHub로 push합니다.",
+    example: "git switch -c feature/team-copy\n\n# edit\n\nnpm run build\n\ngit add .\ngit commit\n\ngit push",
+    note: "브랜치 이름에 작업 목적이 드러나야 PR 목록에서도 이해하기 쉽다고 설명한다.",
+  },
+  {
+    eyebrow: "Bonus",
+    title: "PR로 합치기",
+    message: "팀 작업은 Pull Request로 공유한다.",
+    content:
+      "각 팀원은 자신의 branch를 GitHub에 올리고 Pull Request를 만듭니다.\n\nPR 설명에는 무엇을 바꿨는지, 어떻게 확인했는지, Copilot을 어떻게 사용했는지 적습니다.\n\n팀원들은 서로 리뷰하고 문제가 없으면 main으로 merge합니다. 이 과정이 실무 협업의 기본 흐름입니다.",
+    example: "Branch\n\n ↓\n\nPush\n\n ↓\n\nPull Request\n\n ↓\n\nReview\n\n ↓\n\nMerge",
+    note: "보너스 실습을 GitHub PR, 리뷰, merge 복습으로 연결해 전체 강의를 자연스럽게 마무리한다.",
+  },
+  {
+    eyebrow: "Bonus",
+    title: "Vercel 배포 준비",
+    message: "팀 소개 페이지를 웹에서 볼 수 있게 만든다.",
+    content:
+      "팀 소개 페이지가 main branch에 merge되면 배포할 준비가 된 것입니다.\n\n먼저 로컬에서 npm run build를 실행해 오류 없이 production build가 만들어지는지 확인합니다.\n\n빌드가 성공하면 변경 내용을 commit하고 GitHub 저장소에 push합니다. Vercel은 GitHub 저장소를 기준으로 사이트를 배포할 수 있습니다.",
+    example: "npm run build\n\ngit status\n\ngit push origin main\n\nGitHub Repo",
+    note: "배포 전에 로컬 build를 통과시키는 습관을 강조하고, 배포 기준은 GitHub main branch라고 설명한다.",
+  },
+  {
+    eyebrow: "Bonus",
+    title: "Vercel 프로젝트 연결",
+    message: "GitHub 저장소를 Vercel에 연결한다.",
+    content:
+      "Vercel에 로그인한 뒤 Add New Project를 선택합니다.\n\nGitHub 계정을 연결하고 팀 소개 페이지 저장소를 import합니다.\n\n처음 연결할 때는 Vercel이 저장소 접근 권한을 요청할 수 있습니다. 팀 프로젝트라면 배포 담당자 한 명이 저장소를 연결하고 팀원들과 URL을 공유하면 됩니다.",
+    example: "vercel.com\n\nAdd New Project\n\nImport GitHub Repo\n\nTeam Page",
+    note: "학생들은 GitHub 계정으로 Vercel에 로그인하고, 저장소 권한 승인 화면이 나올 수 있다고 미리 안내한다.",
+  },
+  {
+    eyebrow: "Bonus",
+    title: "Vercel 빌드 설정",
+    message: "Vite 프로젝트는 기본값으로 배포할 수 있다.",
+    content:
+      "Vercel은 Vite 프로젝트를 자동으로 인식합니다.\n\n일반적으로 Framework Preset은 Vite, Build Command는 npm run build, Output Directory는 dist를 사용합니다.\n\n설정이 맞는지 확인한 뒤 Deploy 버튼을 누르면 Vercel이 의존성을 설치하고 빌드한 뒤 정적 파일을 배포합니다.",
+    example: "Framework: Vite\n\nBuild: npm run build\n\nOutput: dist\n\nDeploy",
+    note: "Vite 배포의 핵심 설정 세 가지를 외우게 하기보다 화면에서 확인하게 한다.",
+  },
+  {
+    eyebrow: "Bonus",
+    title: "배포 확인과 공유",
+    message: "배포 URL도 프로젝트 결과물이다.",
+    content:
+      "배포가 끝나면 Vercel이 사이트 URL을 제공합니다.\n\n브라우저에서 팀 소개 페이지가 정상적으로 보이는지 확인하고, 모바일 화면에서도 레이아웃을 점검합니다.\n\n이후 main branch에 새 commit이 push되면 Vercel이 자동으로 다시 배포합니다. 팀원들은 PR을 통해 변경하고 배포 결과를 함께 확인하면 됩니다.",
+    example: "Deploy Complete\n\n ↓\n\nvercel.app URL\n\n ↓\n\nShare\n\n ↓\n\nAuto Deploy",
+    note: "배포 URL을 결과물로 제출하게 하고, main push와 자동 배포가 연결된다는 점을 설명한다.",
   },
 ];
 
